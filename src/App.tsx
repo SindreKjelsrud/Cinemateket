@@ -1,33 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const API_MOVIE_KEY = import.meta.env.VITE_MOVIE_API_KEY;
+  const [movie, setMovie] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch(`http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&t=batman`)
+      .then((response) => response.json())
+      .then((data) => {
+        setMovie(data)
+      }
+      )
+      .then(() => setLoading(false))
+      .catch((error) => console.log(error))
+  }, [])
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {!loading && movie ? (
+          <div>
+            <h1>{movie.Title}</h1>
+            <img src={movie.Poster} alt={movie.Title} />
+            </div>
+        ):(<h1>Loading...</h1>)}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
