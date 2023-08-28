@@ -1,29 +1,31 @@
-# React + TypeScript + Vite
+# [WA.works](https://wa.works/) praksisoppgave
+> *Høst semester 2023*
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📝 Oppgavetekst
+1. Lag en webside som viser en tabell av informasjon fra et API online.
+> 1.5. API-kravspesifikasjon:  
+> 1. Støtte for pagination i api'et  
+> 2. Støtte for en søk funksjon  
+> 3. Bonus om api'et har filter / sortering
 
-Currently, two official plugins are available:
+2. Må kunne sortere hver tabellheader utifra ascending/descending ved trykk.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. Lett mulighet for filtrering på tabellen. 
+> 3.5. Bonus om man bare henter riktig data fra databasen.
 
-## Expanding the ESLint configuration
+4. Det skal gå an å gå inn på hvert item for å få mer detaljer om daten.
+> 4.5. Bonus om ekstradata hentes kun når det trengs / skal vises
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+5. Legg til støtte for pagination, gjennom å bruke api'et.
 
-- Configure the top-level `parserOptions` property like this:
+## 🏗️ Teknologier
+Ettersom vi skulle bruke React så har vi valgt å bruke Vite React med Typescript for dette prosjektet.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-
-test
+## 🛠️ Hvordan kjøre lokalt
+1. [NodeJS](https://nodejs.org/en) må være installert
+2. Klon prosjektet og gå inn i det
+   ```ts
+   git clone https://github.com/SindreKjelsrud/WA.works-praksisoppgave.git
+   cd WA.works-praksisoppgave
+   ```
+3. For å kjøre prosjektet bruk: `npm run dev`
