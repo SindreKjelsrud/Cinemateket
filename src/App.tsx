@@ -26,6 +26,10 @@ function App() {
     return Math.round(totalResults / 10)
   }
 
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+  }
+
   return (
     <>
       <q.div>
@@ -35,6 +39,7 @@ function App() {
             <Pagination
               currentPage={currentPage}
               totalPages={calculatePages(totalPages)}
+              handlePageChange={handlePageChange}
             />
           )}
         </q.div>

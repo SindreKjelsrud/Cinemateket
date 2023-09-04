@@ -5,9 +5,14 @@ import { useEffect, useState } from 'react'
 interface PaginationProps {
   currentPage: number
   totalPages: number
+  handlePageChange: (pageNumber: number) => void
 }
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  totalPages,
+  handlePageChange,
+}) => {
   const [showLeftDots, setShowLeftDots] = useState(false)
   const [showRightDots, setShowRightDots] = useState(false)
   const [showingNumbers, setShowingNumbers] = useState([0])
@@ -15,8 +20,9 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
   useEffect(() => {
     if (totalPages > 5) {
       setShowLeftDots(currentPage > 4 ? true : false)
-      setShowRightDots(currentPage < totalPages - 4 ? true : false)
+      setShowRightDots(currentPage < totalPages - 3 ? true : false)
     }
+    console.log('hei')
     if (!showLeftDots && !showRightDots) {
       setShowingNumbers(Array.from(Array(totalPages).keys()))
     }
@@ -37,7 +43,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
     if (showLeftDots && showRightDots) {
       setShowingNumbers([currentPage - 1, currentPage, currentPage + 1])
     }
-  }, [])
+  }, [totalPages, currentPage, showLeftDots, showRightDots])
 
   return (
     <q.div>
@@ -45,20 +51,29 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
         <q.div className="flex gap-4">
           {showLeftDots && (
             <q.div className="flex">
-              <PaginationButton pageNumber={1} />
+              <PaginationButton
+                pageNumber={1}
+                handlePageChange={handlePageChange}
+              />
               ...
             </q.div>
           )}
 
           {showingNumbers.map((page) => (
             <q.div>
-              <PaginationButton pageNumber={page} />
+              <PaginationButton
+                pageNumber={page}
+                handlePageChange={handlePageChange}
+              />
             </q.div>
           ))}
           {showRightDots && (
             <q.div className="flex">
               ...
-              <PaginationButton pageNumber={totalPages} />{' '}
+              <PaginationButton
+                pageNumber={totalPages}
+                handlePageChange={handlePageChange}
+              />{' '}
             </q.div>
           )}
         </q.div>
