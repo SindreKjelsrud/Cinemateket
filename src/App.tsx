@@ -1,21 +1,17 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-
-  const API_MOVIE_KEY = import.meta.env.VITE_MOVIE_API_KEY;
-  const [movie, setMovie] = useState(null)
+  const API_MOVIE_KEY = import.meta.env.VITE_MOVIE_API_KEY
+  const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&t=batman`)
+    fetch(`http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=batman`)
       .then((response) => response.json())
       .then((data) => {
-        setMovie(data)
-      }
-      )
+        setMovies(data.Search)
+      })
       .then(() => setLoading(false))
       .catch((error) => console.log(error))
   }, [])
@@ -23,12 +19,18 @@ function App() {
   return (
     <>
       <div>
-        {!loading && movie ? (
+        {!loading && movies ? (
           <div>
-            <h1>{movie.Title}</h1>
-            <img src={movie.Poster} alt={movie.Title} />
-            </div>
-        ):(<h1>Loading...</h1>)}
+            {movies.map((movie: any) => (
+              <div>
+                <h1>{movie.Title}</h1>
+                <img src={movie.Poster} alt={movie.Title} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <h1>Loading...</h1>
+        )}
       </div>
     </>
   )
