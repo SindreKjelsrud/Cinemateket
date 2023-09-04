@@ -1,49 +1,62 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import q from 'qjuul'
+import { PaginationButton } from './components'
 
 function App() {
   const API_MOVIE_KEY = 'd92949d8'
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
 
   useEffect(() => {
     fetch(`http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=spider-man`)
       .then((response) => response.json())
       .then((data) => {
         setMovies(data.Search)
+        setTotalPages(data.totalResults)
       })
       .then(() => setLoading(false))
       .catch((error) => console.log(error))
   }, [])
 
+  const calculatePages = (totalResults: number): number => {
+    return Math.round(totalResults / 10)
+  }
+
   return (
     <>
       <q.div>
-        <div>
-          <h1>All movies</h1>
-        </div>
+        <q.div>
+          <q.h1>All movies</q.h1>
+          <q.h2>Pages</q.h2>
+          <q.p>{calculatePages(totalPages)}</q.p>
+          <q.div className="flex gap-4">
+            <PaginationButton pageNumber={currentPage} />
+          </q.div>
+        </q.div>
         {!loading && movies ? (
-          <div>
-            <table>
-              <tr>
-                <th>Poster</th>
-                <th>Title</th>
-                <th>Year</th>
-              </tr>
+          <q.div>
+            <q.table>
+              <q.tr>
+                <q.th>Poster</q.th>
+                <q.th>Title</q.th>
+                <q.th>Year</q.th>
+              </q.tr>
               {movies.map((movie: any) => (
-                <tr>
-                  <td>
-                    <img src={movie.Poster} alt={movie.Title} width="100" />
-                  </td>
-                  <td>{movie.Title}</td>
-                  <td>{movie.Year}</td>
-                </tr>
+                <q.tr>
+                  <q.td>
+                    <q.img src={movie.Poster} alt={movie.Title} width="100" />
+                  </q.td>
+                  <q.td>{movie.Title}</q.td>
+                  <q.td>{movie.Year}</q.td>
+                </q.tr>
               ))}
-            </table>
-          </div>
+            </q.table>
+          </q.div>
         ) : (
-          <h1>Loading...</h1>
+          <q.h1>Loading...</q.h1>
         )}
       </q.div>
     </>
