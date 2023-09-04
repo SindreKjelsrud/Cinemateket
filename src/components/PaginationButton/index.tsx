@@ -12,7 +12,7 @@ const PaginationButton: React.FC<PaginationButtonProps> = ({
   return (
     <q.div
       onClick={() => handlePageChange(pageNumber)}
-      className="bg-red-400 p-2 rounded-md"
+      className="bg-red-400 p-2 rounded-md hover:cursor-pointer"
     >
       <p>{pageNumber}</p>
     </q.div>
