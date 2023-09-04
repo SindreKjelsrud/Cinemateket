@@ -33,7 +33,11 @@ function App() {
           <q.h2>Pages</q.h2>
           <q.p>{calculatePages(totalPages)}</q.p>
           <q.div className="flex gap-4">
-            <PaginationButton pageNumber={currentPage} />
+            {Array.from(Array(calculatePages(totalPages)).keys()).map(
+              (page) => (
+                <PaginationButton pageNumber={page + 1} />
+              )
+            )}
           </q.div>
         </q.div>
         {!loading && movies ? (

@@ -6,7 +6,7 @@ interface PaginationButtonProps {
 
 const PaginationButton: React.FC<PaginationButtonProps> = ({ pageNumber }) => {
   return (
-    <q.div className="">
+    <q.div className="bg-red-400 p-2 rounded-md">
       <p>{pageNumber}</p>
     </q.div>
   )
