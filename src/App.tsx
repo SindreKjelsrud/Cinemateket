@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import q from 'qjuul'
 import { PaginationButton } from './components'
+import Pagination from './components/Pagination'
 
 function App() {
   const API_MOVIE_KEY = 'd92949d8'
@@ -30,15 +31,12 @@ function App() {
       <q.div>
         <q.div>
           <q.h1>All movies</q.h1>
-          <q.h2>Pages</q.h2>
-          <q.p>{calculatePages(totalPages)}</q.p>
-          <q.div className="flex gap-4">
-            {Array.from(Array(calculatePages(totalPages)).keys()).map(
-              (page) => (
-                <PaginationButton pageNumber={page + 1} />
-              )
-            )}
-          </q.div>
+          {!loading && totalPages && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={calculatePages(totalPages)}
+            />
+          )}
         </q.div>
         {!loading && movies ? (
           <q.div>
