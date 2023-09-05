@@ -37,7 +37,7 @@ function App() {
       <q.div className="flex flex-col justify-center items-center mx-auto w-3/4">
         <q.div className="flex flex-col w-full items-center">
           <q.h1>All movies</q.h1>
-          <q.div className="flex">
+          <q.div className="flex pt-2">
             {!loading && totalPages && (
               <Pagination
                 currentPage={currentPage}
