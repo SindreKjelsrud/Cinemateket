@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import q from 'qjuul'
-import { PaginationButton } from './components'
 import Pagination from './components/Pagination'
+import { MovieTableRow } from './components'
+import type { movieObject } from './types/movie'
+import Modal from 'react-modal'
 
 function App() {
   const API_MOVIE_KEY = 'd92949d8'
@@ -10,6 +12,8 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalMovie, setModalMovie] = useState<movieObject | null>(null)
 
   useEffect(() => {
     fetch(
@@ -18,6 +22,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setMovies(data.Search)
+        console.log(data)
         setTotalPages(data.totalResults)
       })
       .then(() => setLoading(false))
@@ -32,9 +37,41 @@ function App() {
     setCurrentPage(pageNumber)
   }
 
+  const handleModalOpen = (movie: movieObject) => {
+    setModalOpen(true)
+    setModalMovie(movie)
+  }
+
   return (
     <>
       <q.div className="flex flex-col justify-center items-center mx-auto w-3/4">
+        <Modal
+          className="p-6 bg-black rounded-lg outline-none" // styles for the modal container
+          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" // styles for the overlay
+          isOpen={modalOpen}
+          onRequestClose={() => setModalOpen(false)}
+        >
+          <q.div className="flex">
+            <q.img
+              className="h-44 max-w-sm mx-auto mb-4 rounded-md shadow"
+              src={modalMovie?.Poster}
+              alt={modalMovie?.Title}
+            />
+            <q.div className="flex flex-col px-10 pt-5">
+              <q.h1 className="text-xl font-bold mb-4">
+                {modalMovie?.Title}
+              </q.h1>
+              <q.p>Year: {modalMovie?.Year}</q.p>
+              <q.p>Type: {modalMovie?.Type}</q.p>
+              <q.a
+                className='"underline text-blue-500 hover:text-blue-700"'
+                href={`https://www.imdb.com/title/${modalMovie?.imdbID}`}
+              >
+                {`https://www.imdb.com/title/${modalMovie?.imdbID}`}
+              </q.a>
+            </q.div>
+          </q.div>
+        </Modal>
         <q.div className="flex flex-col w-full items-center">
           <q.h1>All movies</q.h1>
           <q.div className="flex pt-2">
@@ -50,20 +87,22 @@ function App() {
         {!loading && movies ? (
           <q.div>
             <q.table className="border-separate border-spacing-y-5">
-              <q.tr>
-                <q.th>Poster</q.th>
-                <q.th>Title</q.th>
-                <q.th>Year</q.th>
-              </q.tr>
-              {movies.map((movie: any) => (
-                <q.tr className="card rounded-md">
-                  <q.td className="p-2">
-                    <q.img src={movie.Poster} alt={movie.Title} width="100" />
-                  </q.td>
-                  <q.td>{movie.Title}</q.td>
-                  <q.td>{movie.Year}</q.td>
+              <q.thead>
+                <q.tr>
+                  <q.th>Poster</q.th>
+                  <q.th>Title</q.th>
+                  <q.th>Year</q.th>
                 </q.tr>
-              ))}
+              </q.thead>
+              <q.tbody>
+                {movies.map((movie: any) => (
+                  <MovieTableRow
+                    movie={movie}
+                    key={movie.imdbID}
+                    onClick={() => handleModalOpen(movie)}
+                  />
+                ))}
+              </q.tbody>
             </q.table>
           </q.div>
         ) : (
