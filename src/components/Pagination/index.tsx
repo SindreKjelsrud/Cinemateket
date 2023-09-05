@@ -64,6 +64,7 @@ const Pagination: React.FC<PaginationProps> = ({
               <PaginationButton
                 pageNumber={page}
                 handlePageChange={handlePageChange}
+                isCurrentPage={page === currentPage}
               />
             </q.div>
           ))}
