@@ -12,7 +12,9 @@ function App() {
   const [totalPages, setTotalPages] = useState(0)
 
   useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=spider-man`)
+    fetch(
+      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=spider-man&page=${currentPage}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setMovies(data.Search)
@@ -20,7 +22,7 @@ function App() {
       })
       .then(() => setLoading(false))
       .catch((error) => console.log(error))
-  }, [])
+  }, [currentPage])
 
   const calculatePages = (totalResults: number): number => {
     return Math.round(totalResults / 10)
