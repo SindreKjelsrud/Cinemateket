@@ -4,10 +4,15 @@
 
 :root {
   --bg: #27374d;
+  --bg2: #1a2533;
   --text-1: #dde6ed;
 }
 
 html {
   background-color: var(--bg);
   color: var(--text-1);
+}
+
+.card {
+  background-color: var(--bg2);
 }

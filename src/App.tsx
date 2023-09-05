@@ -34,28 +34,30 @@ function App() {
 
   return (
     <>
-      <q.div>
-        <q.div>
+      <q.div className="flex flex-col justify-center items-center mx-auto w-3/4">
+        <q.div className="flex flex-col w-full items-center">
           <q.h1>All movies</q.h1>
-          {!loading && totalPages && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={calculatePages(totalPages)}
-              handlePageChange={handlePageChange}
-            />
-          )}
+          <q.div className="flex">
+            {!loading && totalPages && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={calculatePages(totalPages)}
+                handlePageChange={handlePageChange}
+              />
+            )}
+          </q.div>
         </q.div>
         {!loading && movies ? (
           <q.div>
-            <q.table>
+            <q.table className="border-separate border-spacing-y-5">
               <q.tr>
                 <q.th>Poster</q.th>
                 <q.th>Title</q.th>
                 <q.th>Year</q.th>
               </q.tr>
               {movies.map((movie: any) => (
-                <q.tr>
-                  <q.td>
+                <q.tr className="card rounded-md">
+                  <q.td className="p-2">
                     <q.img src={movie.Poster} alt={movie.Title} width="100" />
                   </q.td>
                   <q.td>{movie.Title}</q.td>
