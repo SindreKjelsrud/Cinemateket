@@ -95,7 +95,10 @@ function App() {
         <q.div className="flex flex-col w-full items-center">
           <q.h1 className="py-4">All movies</q.h1>
 
-          <q.form className="flex flex-col gap-3 card p-4 rounded-lg w-full px-28">
+          <q.form
+            className="flex flex-col gap-3 card p-4 rounded-lg w-full px-28"
+            onSubmit={handleMovieSubmit}
+          >
             <q.label>Choose a movie title:</q.label>
             <q.input
               type="text"
