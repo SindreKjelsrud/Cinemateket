@@ -14,7 +14,7 @@ Modal.setAppElement(mainAppElement as HTMLElement)
 
 const MovieTableRow: React.FC<MovieTableRowProps> = ({ movie, onClick }) => {
   return (
-    <q.tr onClick={onClick} className="card rounded-md">
+    <q.tr onClick={onClick} className="card rounded-md hover:cursor-pointer">
       <q.td className="p-2">
         <q.img src={movie.Poster} alt={movie.Title} width="100" />
       </q.td>

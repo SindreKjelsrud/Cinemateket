@@ -15,6 +15,8 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMovie, setModalMovie] = useState<movieObject | null>(null)
 
+  console.log('App mounted')
+
   useEffect(() => {
     fetch(
       `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=spider-man&page=${currentPage}`
@@ -27,7 +29,7 @@ function App() {
       })
       .then(() => setLoading(false))
       .catch((error) => console.log(error))
-  }, [currentPage])
+  }, [])
 
   const calculatePages = (totalResults: number): number => {
     return Math.round(totalResults / 10)
