@@ -7,7 +7,7 @@ import Modal from 'react-modal'
 
 function App() {
   const API_MOVIE_KEY = 'd92949d8'
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState<movieObject[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
@@ -16,6 +16,7 @@ function App() {
   const [movieType, setMovieType] = useState('')
   const [movieYear, setMovieYear] = useState('')
   const [movieTitle, setMovieTitle] = useState('')
+  const [sortAscending, setSortAscending] = useState(true)
 
   console.log('App mounted')
 
@@ -59,6 +60,28 @@ function App() {
       })
       .then(() => setLoading(false))
       .catch((error) => console.log(error))
+  }
+
+  const sortHandler = (sortType: string) => {
+    let sortedMovies: movieObject[] = []
+
+    if (sortType === 'title') {
+      sortedMovies = [...movies].sort((m1, m2) =>
+        sortAscending
+          ? m1.Title.localeCompare(m2.Title)
+          : m2.Title.localeCompare(m1.Title)
+      )
+    }
+    if (sortType === 'year') {
+      sortedMovies = [...movies].sort((m1, m2) =>
+        sortAscending
+          ? m1.Year.localeCompare(m2.Year)
+          : m2.Year.localeCompare(m1.Year)
+      )
+    }
+
+    setSortAscending(!sortAscending)
+    setMovies(sortedMovies)
   }
 
   return (
@@ -117,12 +140,12 @@ function App() {
                 <q.thead>
                   <q.tr>
                     <q.th>Poster</q.th>
-                    <q.th>Title</q.th>
-                    <q.th>Year</q.th>
+                    <q.th onClick={() => sortHandler('title')}>Title</q.th>
+                    <q.th onClick={() => sortHandler('year')}>Year</q.th>
                   </q.tr>
                 </q.thead>
                 <q.tbody>
-                  {movies.map((movie: any) => (
+                  {movies.map((movie: movieObject) => (
                     <MovieTableRow
                       movie={movie}
                       key={movie.imdbID}
