@@ -85,7 +85,7 @@ function App() {
 
   return (
     <>
-      <q.div className="flex flex-col justify-center items-center mx-auto w-2/4">
+      <q.div className="flex flex-col justify-center items-center mx-auto  w-3/4 md:w-3/5 lg:w-2/4">
         <MovieModal {...{ setModalOpen, modalMovie, modalOpen }} />
         <q.div className="flex flex-col w-full items-center">
           <q.h1 className="py-4">All movies</q.h1>
