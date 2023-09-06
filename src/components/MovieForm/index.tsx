@@ -26,11 +26,11 @@ const MovieForm: React.FC<MovieFormProps> = ({
         id="movieTitle"
         placeholder="Movie title"
         onChange={(e) => setMovieTitle(e.target.value)}
-        className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+        className="border text-black border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
       />
       <q.label>Choose year movie was made: (OPTIONAL)</q.label>
       <q.select
-        className="p-2 rounded-md border  border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+        className="p-2 rounded-md border text-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         onChange={(e) => setMovieYear(e.target.value)}
       >
         {/* Option for year 1923-2023 */}
@@ -46,7 +46,7 @@ const MovieForm: React.FC<MovieFormProps> = ({
       </q.select>
       <q.label>Choose type: (OPTIONAL)</q.label>
       <q.select
-        className="p-2 rounded-md border  border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+        className="p-2 rounded-md border text-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         onChange={(e) => setMovieType(e.target.value)}
       >
         <q.option value="">All types</q.option>
