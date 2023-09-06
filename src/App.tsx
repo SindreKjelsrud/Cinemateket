@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     fetch(
-      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=spider-man&page=${currentPage}`
+      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${movieTitle}&page=${currentPage}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -106,10 +106,12 @@ function App() {
               />
             )}
           </q.div>
-          {!loading && movies ? (
+          {loading ? (
+            <q.h1>Loading...</q.h1>
+          ) : movies ? (
             <MovieTable {...{ handleModalOpen, sortHandler, movies }} />
           ) : (
-            <q.h1>Loading...</q.h1>
+            <q.h2>Find a list of movies by searching above ☝️ </q.h2>
           )}
         </q.div>
       </q.div>
