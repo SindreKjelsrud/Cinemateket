@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import q from 'qjuul'
-import { MovieTableRow, MovieForm, Pagination } from './components'
+import {
+  MovieTableRow,
+  MovieForm,
+  Pagination,
+  MovieTable,
+  MovieModal,
+} from './components'
 import type { movieObject } from './types/movie'
 import Modal from 'react-modal'
 
@@ -87,36 +93,9 @@ function App() {
   return (
     <>
       <q.div className="flex flex-col justify-center items-center mx-auto w-2/4">
-        <Modal
-          className="p-6 bg-black rounded-lg outline-none" // styles for the modal container
-          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" // styles for the overlay
-          isOpen={modalOpen}
-          onRequestClose={() => setModalOpen(false)}
-        >
-          <q.div className="flex">
-            <q.img
-              className="h-44 max-w-sm mx-auto mb-4 rounded-md shadow"
-              src={modalMovie?.Poster}
-              alt={modalMovie?.Title}
-            />
-            <q.div className="flex flex-col px-10 pt-5">
-              <q.h1 className="text-xl font-bold mb-4">
-                {modalMovie?.Title}
-              </q.h1>
-              <q.p>Year: {modalMovie?.Year}</q.p>
-              <q.p>Type: {modalMovie?.Type}</q.p>
-              <q.a
-                className='"underline text-blue-500 hover:text-blue-700"'
-                href={`https://www.imdb.com/title/${modalMovie?.imdbID}`}
-              >
-                {`https://www.imdb.com/title/${modalMovie?.imdbID}`}
-              </q.a>
-            </q.div>
-          </q.div>
-        </Modal>
+        <MovieModal {...{ setModalOpen, modalMovie, modalOpen }} />
         <q.div className="flex flex-col w-full items-center">
           <q.h1 className="py-4">All movies</q.h1>
-
           <MovieForm
             {...{
               handleMovieSubmit,
@@ -135,26 +114,7 @@ function App() {
             )}
           </q.div>
           {!loading && movies ? (
-            <q.div className="w-full">
-              <q.table className="border-separate border-spacing-y-5 w-full">
-                <q.thead>
-                  <q.tr>
-                    <q.th>Poster</q.th>
-                    <q.th onClick={() => sortHandler('title')}>Title</q.th>
-                    <q.th onClick={() => sortHandler('year')}>Year</q.th>
-                  </q.tr>
-                </q.thead>
-                <q.tbody>
-                  {movies.map((movie: movieObject) => (
-                    <MovieTableRow
-                      movie={movie}
-                      key={movie.imdbID}
-                      onClick={() => handleModalOpen(movie)}
-                    />
-                  ))}
-                </q.tbody>
-              </q.table>
-            </q.div>
+            <MovieTable {...{ handleModalOpen, sortHandler, movies }} />
           ) : (
             <q.h1>Loading...</q.h1>
           )}

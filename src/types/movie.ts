@@ -5,3 +5,5 @@ export type movieObject = {
   Year: string
   imdbID: string
 }
+
+export type modalMovieType = movieObject | null
