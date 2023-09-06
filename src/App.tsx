@@ -1,15 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import q from 'qjuul'
-import {
-  MovieTableRow,
-  MovieForm,
-  Pagination,
-  MovieTable,
-  MovieModal,
-} from './components'
+import { MovieForm, Pagination, MovieTable, MovieModal } from './components'
 import type { movieObject } from './types/movie'
-import Modal from 'react-modal'
 
 function App() {
   const API_MOVIE_KEY = 'd92949d8'

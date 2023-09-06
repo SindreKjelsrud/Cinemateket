@@ -1,6 +1,7 @@
 import type { movieObject } from '../../types/movie'
 import q from 'qjuul'
 import MovieTableRow from '../MovieTableRow'
+import arrow from '../../../public/arrow-down-up-svgrepo-com.svg'
 
 interface MovieTableProps {
   handleModalOpen: (movie: movieObject) => void
@@ -16,11 +17,27 @@ const MovieTable: React.FC<MovieTableProps> = ({
   return (
     <q.div className="w-full">
       <q.table className="border-separate border-spacing-y-5 w-full">
-        <q.thead>
+        <q.thead className="">
           <q.tr>
-            <q.th>Poster</q.th>
-            <q.th onClick={() => sortHandler('title')}>Title</q.th>
-            <q.th onClick={() => sortHandler('year')}>Year</q.th>
+            <q.th className="text-left"></q.th>
+            <q.th
+              className=" text-left hover:cursor-pointer"
+              onClick={() => sortHandler('title')}
+            >
+              <q.div className="flex font-bold">
+                Title
+                <q.img src={arrow} className="w-3 ml-1 " />
+              </q.div>
+            </q.th>
+            <q.th
+              className="text-left hover:cursor-pointer"
+              onClick={() => sortHandler('year')}
+            >
+              <q.div className="flex">
+                Year
+                <q.img src={arrow} className="w-3 ml-1" />
+              </q.div>
+            </q.th>
           </q.tr>
         </q.thead>
         <q.tbody>
