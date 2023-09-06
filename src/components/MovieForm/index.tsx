@@ -17,7 +17,7 @@ const MovieForm: React.FC<MovieFormProps> = ({
 }) => {
   return (
     <q.form
-      className="flex flex-col gap-3 card p-4 rounded-lg w-full px-28"
+      className="flex flex-col gap-3 card p-4 rounded-lg w-full lg:px-14"
       onSubmit={handleMovieSubmit}
     >
       <q.label>Choose a movie title:</q.label>
@@ -54,7 +54,7 @@ const MovieForm: React.FC<MovieFormProps> = ({
         <q.option value="series">Series</q.option>
         <q.option value="episode">Episodes</q.option>
       </q.select>
-      <q.button className="bg-white p-3 my-2 rounded-md w-2/5 mx-auto text-red-900 font-semibold">
+      <q.button className="bg-white p-3 my-2 rounded-md w-3/5 md:w-2/5 mx-auto text-red-900 font-semibold">
         Find movies
       </q.button>
     </q.form>
