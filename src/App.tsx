@@ -3,6 +3,7 @@ import './App.css'
 import q from 'qjuul'
 import { MovieForm, Pagination, MovieTable, MovieModal } from './components'
 import type { movieObject } from './types/movie'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function App() {
   const API_MOVIE_KEY = 'd92949d8'
@@ -17,11 +18,18 @@ function App() {
   const [movieTitle, setMovieTitle] = useState('')
   const [sortAscending, setSortAscending] = useState(true)
 
-  console.log('App mounted')
+  const navigate = useNavigate()
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const title = searchParams.get('title') || ''
+  const type = searchParams.get('type') || ''
+  const year = searchParams.get('y') || ''
+
+  // testing testing
 
   useEffect(() => {
     fetch(
-      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${movieTitle}&page=${currentPage}`
+      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${title}&type=${type}&y=${year}&page=${currentPage}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -31,7 +39,7 @@ function App() {
       })
       .then(() => setLoading(false))
       .catch((error) => console.log(error))
-  }, [currentPage])
+  }, [title, type, year])
 
   const calculatePages = (totalResults: number): number => {
     return Math.round(totalResults / 10)
@@ -39,6 +47,7 @@ function App() {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
+    handleMovieSubmit()
   }
 
   const handleModalOpen = (movie: movieObject) => {
@@ -46,10 +55,19 @@ function App() {
     setModalMovie(movie)
   }
 
-  const handleMovieSubmit = (event: any) => {
-    event.preventDefault()
+  const handleMovieSubmit = (event?: any) => {
+    if (event) event.preventDefault()
+    navigate(
+      movieYear && movieType
+        ? `?title=${movieTitle}&type=${movieType}&y=${movieYear}&page=${currentPage}`
+        : movieYear
+        ? `?title=${movieTitle}&y=${movieYear}&page=${currentPage}`
+        : movieYear && movieType
+        ? `?title=${movieTitle}&type=${movieType}&page=${currentPage}`
+        : `?title=${movieTitle}&page=${currentPage}`
+    )
     fetch(
-      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${movieTitle}&type=${movieType}&y=${movieYear}`
+      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${title}&type=${type}&y=${year}&page=${currentPage}`
     )
       .then((response) => response.json())
       .then((data) => {
