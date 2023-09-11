@@ -24,22 +24,53 @@ function App() {
   const title = searchParams.get('title') || ''
   const type = searchParams.get('type') || ''
   const year = searchParams.get('y') || ''
-
-  // testing testing
+  const page = searchParams.get('page') || ''
 
   useEffect(() => {
+    handleMovieSubmit()
+  }, [currentPage, title, type, year])
+
+  const handleMovieSubmit = ({
+    event,
+    pageNumber,
+  }: {
+    event?: any
+    pageNumber?: number
+  } = {}) => {
+    if (event) event.preventDefault()
+
+    let pageNum: number
+    if (pageNumber) {
+      pageNum = pageNumber
+    } else {
+      pageNum = Number(page)
+    }
+
+    if (!movieTitle && !movieType && !movieYear) {
+      setLoading(false)
+    }
+
+    // navigate(
+    //   movieYear && movieType
+    //     ? `?title=${movieTitle}&type=${movieType}&y=${movieYear}&page=${currentPage}`
+    //     : movieYear
+    //     ? `?title=${movieTitle}&y=${movieYear}&page=${currentPage}`
+    //     : movieYear && movieType
+    //     ? `?title=${movieTitle}&type=${movieType}&page=${currentPage}`
+    //     : `?title=${movieTitle}&page=${currentPage}`
+    // )
+
     fetch(
-      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${title}&type=${type}&y=${year}&page=${currentPage}`
+      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${title}&type=${type}&y=${year}&page=${pageNum}`
     )
       .then((response) => response.json())
       .then((data) => {
         setMovies(data.Search)
-        console.log(data)
         setTotalPages(data.totalResults)
       })
       .then(() => setLoading(false))
       .catch((error) => console.log(error))
-  }, [title, type, year])
+  }
 
   const calculatePages = (totalResults: number): number => {
     return Math.round(totalResults / 10)
@@ -47,36 +78,12 @@ function App() {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
-    handleMovieSubmit()
+    handleMovieSubmit({ pageNumber })
   }
 
   const handleModalOpen = (movie: movieObject) => {
     setModalOpen(true)
     setModalMovie(movie)
-  }
-
-  const handleMovieSubmit = (event?: any) => {
-    if (event) event.preventDefault()
-    navigate(
-      movieYear && movieType
-        ? `?title=${movieTitle}&type=${movieType}&y=${movieYear}&page=${currentPage}`
-        : movieYear
-        ? `?title=${movieTitle}&y=${movieYear}&page=${currentPage}`
-        : movieYear && movieType
-        ? `?title=${movieTitle}&type=${movieType}&page=${currentPage}`
-        : `?title=${movieTitle}&page=${currentPage}`
-    )
-    fetch(
-      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${title}&type=${type}&y=${year}&page=${currentPage}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setMovies(data.Search)
-        console.log(data)
-        setTotalPages(data.totalResults)
-      })
-      .then(() => setLoading(false))
-      .catch((error) => console.log(error))
   }
 
   const sortHandler = (sortType: string) => {
@@ -113,6 +120,7 @@ function App() {
               setMovieTitle,
               setMovieType,
               setMovieYear,
+              movieTitle,
             }}
           />
           <q.div className="flex pt-10">

@@ -1,5 +1,3 @@
-import type { movieObject } from '../../types/movie'
-import Modal from 'react-modal'
 import q from 'qjuul'
 
 interface MovieFormProps {
@@ -7,6 +5,7 @@ interface MovieFormProps {
   setMovieTitle: (title: string) => void
   setMovieYear: (year: string) => void
   setMovieType: (type: string) => void
+  movieTitle: string
 }
 
 const MovieForm: React.FC<MovieFormProps> = ({
@@ -14,17 +13,19 @@ const MovieForm: React.FC<MovieFormProps> = ({
   setMovieTitle,
   setMovieType,
   setMovieYear,
+  movieTitle,
 }) => {
   return (
     <q.form
       className="flex flex-col gap-3 card p-4 rounded-lg w-full lg:px-14"
-      onSubmit={handleMovieSubmit}
+      onSubmit={(event) => handleMovieSubmit({ event: event })}
     >
       <q.label>Choose a movie title:</q.label>
       <q.input
         type="text"
         id="movieTitle"
         placeholder="Movie title"
+        value={movieTitle.length > 0 ? movieTitle : ''}
         onChange={(e) => setMovieTitle(e.target.value)}
         className="border text-black border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
       />
