@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, FormEvent } from 'react'
 import './App.css'
 import q from 'qjuul'
 import { MovieForm, Pagination, MovieTable, MovieModal } from './components'
 import type { movieObject } from './types/movie'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { fetchMovie } from './api/fetchMovie'
 
 function App() {
-  const API_MOVIE_KEY = 'd92949d8'
   const [movies, setMovies] = useState<movieObject[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -28,13 +28,13 @@ function App() {
 
   useEffect(() => {
     handleMovieSubmit()
-  }, [currentPage, title, type, year])
+  }, [title, type, year])
 
-  const handleMovieSubmit = ({
+  const handleMovieSubmit = async ({
     event,
     pageNumber,
   }: {
-    event?: any
+    event?: FormEvent
     pageNumber?: number
   } = {}) => {
     if (event) event.preventDefault()
@@ -50,26 +50,22 @@ function App() {
       setLoading(false)
     }
 
-    // navigate(
-    //   movieYear && movieType
-    //     ? `?title=${movieTitle}&type=${movieType}&y=${movieYear}&page=${currentPage}`
-    //     : movieYear
-    //     ? `?title=${movieTitle}&y=${movieYear}&page=${currentPage}`
-    //     : movieYear && movieType
-    //     ? `?title=${movieTitle}&type=${movieType}&page=${currentPage}`
-    //     : `?title=${movieTitle}&page=${currentPage}`
-    // )
-
-    fetch(
-      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${title}&type=${type}&y=${year}&page=${pageNum}`
+    navigate(
+      movieYear && movieType
+        ? `?title=${movieTitle}&type=${movieType}&y=${movieYear}&page=${pageNum}`
+        : movieYear
+        ? `?title=${movieTitle}&y=${movieYear}&page=${pageNum}`
+        : movieYear && movieType
+        ? `?title=${movieTitle}&type=${movieType}&page=${pageNum}`
+        : `?title=${movieTitle}&page=${pageNum}`
     )
-      .then((response) => response.json())
-      .then((data) => {
-        setMovies(data.Search)
-        setTotalPages(data.totalResults)
-      })
-      .then(() => setLoading(false))
-      .catch((error) => console.log(error))
+
+    const response = await fetchMovie(title, type, year, pageNum)
+    if (response.Response === 'True') {
+      setMovies(response.Search)
+      setTotalPages(response.totalResults)
+      setLoading(false)
+    }
   }
 
   const calculatePages = (totalResults: number): number => {
