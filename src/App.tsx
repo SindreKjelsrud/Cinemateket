@@ -1,10 +1,10 @@
-import { useEffect, useState, FormEvent } from 'react'
-import './App.css'
-import q from 'qjuul'
 import { MovieForm, Pagination, MovieTable, MovieModal } from './components'
-import type { movieObject } from './types/movie'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState, FormEvent } from 'react'
+import type { movieObject } from './types/movie'
 import { fetchMovie } from './api/fetchMovie'
+import q from 'qjuul'
+import './App.css'
 
 function App() {
   const [movies, setMovies] = useState<movieObject[]>([])
@@ -46,25 +46,26 @@ function App() {
       pageNum = Number(page)
     }
 
-    if (!movieTitle && !movieType && !movieYear) {
+    if (!title && !type && !year) {
+      navigate('')
       setLoading(false)
-    }
+    } else {
+      navigate(
+        movieYear && movieType
+          ? `?title=${movieTitle}&type=${movieType}&y=${movieYear}&page=${pageNum}`
+          : movieYear
+          ? `?title=${movieTitle}&y=${movieYear}&page=${pageNum}`
+          : movieYear && movieType
+          ? `?title=${movieTitle}&type=${movieType}&page=${pageNum}`
+          : `?title=${movieTitle}&page=${pageNum}`
+      )
 
-    navigate(
-      movieYear && movieType
-        ? `?title=${movieTitle}&type=${movieType}&y=${movieYear}&page=${pageNum}`
-        : movieYear
-        ? `?title=${movieTitle}&y=${movieYear}&page=${pageNum}`
-        : movieYear && movieType
-        ? `?title=${movieTitle}&type=${movieType}&page=${pageNum}`
-        : `?title=${movieTitle}&page=${pageNum}`
-    )
-
-    const response = await fetchMovie(title, type, year, pageNum)
-    if (response.Response === 'True') {
-      setMovies(response.Search)
-      setTotalPages(response.totalResults)
-      setLoading(false)
+      const response = await fetchMovie(title, type, year, pageNum)
+      if (response.Response === 'True') {
+        setMovies(response.Search)
+        setTotalPages(response.totalResults)
+        setLoading(false)
+      }
     }
   }
 
@@ -120,7 +121,7 @@ function App() {
             }}
           />
           <q.div className="flex pt-10">
-            {!loading && totalPages && (
+            {!loading && totalPages > 0 && (
               <Pagination
                 currentPage={currentPage}
                 totalPages={calculatePages(totalPages)}
@@ -130,7 +131,7 @@ function App() {
           </q.div>
           {loading ? (
             <q.h1>Loading...</q.h1>
-          ) : movies ? (
+          ) : movies.length > 0 ? (
             <MovieTable {...{ handleModalOpen, sortHandler, movies }} />
           ) : (
             <q.h2>Find a list of movies by searching above ☝️ </q.h2>
