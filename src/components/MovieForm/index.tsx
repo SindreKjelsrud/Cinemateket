@@ -3,9 +3,10 @@ import q from 'qjuul'
 import { useNavigateToPage } from '../../util/navigate'
 
 const MovieForm: React.FC = () => {
-  const [movieTitle, setMovieTitle] = useState('')
-  const [movieYear, setMovieYear] = useState('')
-  const [movieType, setMovieType] = useState('')
+  const searchParams = new URLSearchParams(window.location.search)
+  const [movieTitle, setMovieTitle] = useState(searchParams.get('title') || '')
+  const [movieYear, setMovieYear] = useState(searchParams.get('y') || '')
+  const [movieType, setMovieType] = useState(searchParams.get('type') || '')
   const navigateToPage = useNavigateToPage()
 
   return (
@@ -21,6 +22,7 @@ const MovieForm: React.FC = () => {
         type="text"
         id="movieTitle"
         placeholder="Movie title"
+        value={movieTitle.charAt(0).toUpperCase() + movieTitle.slice(1)}
         onChange={(e) => setMovieTitle(e.target.value)}
         className="border text-black border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
       />

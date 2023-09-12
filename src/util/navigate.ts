@@ -3,15 +3,13 @@ import { useNavigate } from 'react-router'
 export const useNavigateToPage = () => {
   const navigate = useNavigate()
 
-  return (title?: string, page: string = '1', type?: string, year?: string) => {
+  return (title?: string, type?: string, year?: string, page: string = '1') => {
     if (!title) navigate('')
     else {
       let query = `?title=${title}&page=${page}`
 
-      if (type) query += `&type=${type}`
       if (year) query += `&year=${year}`
-
-      console.log(query)
+      if (type) query += `&type=${type}`
 
       navigate(query)
     }

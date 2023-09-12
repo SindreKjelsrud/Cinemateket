@@ -4,7 +4,7 @@ import q from 'qjuul'
 import { MovieForm, Pagination, MovieTable, MovieModal } from './components'
 import type { movieObject } from './types/movie'
 import { fetchMovie } from './api/fetchMovie'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
 function App() {
   const [movies, setMovies] = useState<movieObject[]>([])
@@ -22,6 +22,7 @@ function App() {
       if (response.Response == 'True') {
         setMovies(response.Search)
         setTotalPages(Number(response.totalResults))
+        setCurrentPage(Number(page))
         setLoading(false)
       }
     }
