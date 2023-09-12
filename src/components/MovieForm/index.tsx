@@ -1,24 +1,17 @@
-import type { movieObject } from '../../types/movie'
-import Modal from 'react-modal'
+import { useState } from 'react'
 import q from 'qjuul'
+import { useNavigateToPage } from '../../util/navigate'
 
-interface MovieFormProps {
-  handleMovieSubmit: (event: any) => void
-  setMovieTitle: (title: string) => void
-  setMovieYear: (year: string) => void
-  setMovieType: (type: string) => void
-}
+const MovieForm: React.FC = () => {
+  const [movieTitle, setMovieTitle] = useState('')
+  const [movieYear, setMovieYear] = useState('')
+  const [movieType, setMovieType] = useState('')
+  const navigateToPage = useNavigateToPage()
 
-const MovieForm: React.FC<MovieFormProps> = ({
-  handleMovieSubmit,
-  setMovieTitle,
-  setMovieType,
-  setMovieYear,
-}) => {
   return (
     <q.form
       className="flex flex-col gap-3 card p-4 rounded-lg w-full lg:px-14"
-      onSubmit={handleMovieSubmit}
+      onSubmit={() => navigateToPage(movieTitle, movieYear, movieType)}
     >
       <q.label>Choose a movie title:</q.label>
       <q.input

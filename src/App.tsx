@@ -17,23 +17,24 @@ function App() {
   const location = useLocation()
 
   useEffect(() => {
+    const handleFetchMovie = async () => {
+      const response = await fetchMovie(title, page, type, year)
+      if (response.Response == 'True') {
+        setMovies(response.Search)
+        setTotalPages(Number(response.totalResults))
+        setLoading(false)
+      }
+    }
     const searchParams = new URLSearchParams(location.search)
     const title = searchParams.get('title') || ''
     const page = searchParams.get('page') || ''
     const type = searchParams.get('type') || ''
     const year = searchParams.get('y') || ''
 
-    const handleFetchMovie = async () => {
-      const response = await fetchMovie(title, page, type, year)
-      if (response.Response == 'true') {
-        setMovies(response.Search)
-        setTotalPages(Number(response.totalResults))
-        setLoading(false)
-      }
-    }
-
     if (title) {
       handleFetchMovie()
+    } else {
+      setLoading(false)
     }
   }, [])
 
@@ -78,16 +79,9 @@ function App() {
         <MovieModal {...{ setModalOpen, modalMovie, modalOpen }} />
         <q.div className="flex flex-col w-full items-center">
           <q.h1 className="py-4">All movies</q.h1>
-          <MovieForm
-            {...{
-              handleMovieSubmit,
-              setMovieTitle,
-              setMovieType,
-              setMovieYear,
-            }}
-          />
+          <MovieForm />
           <q.div className="flex pt-10">
-            {!loading && totalPages && (
+            {!loading && movies.length > 0 && (
               <Pagination
                 currentPage={currentPage}
                 totalPages={calculatePages(totalPages)}
@@ -97,7 +91,7 @@ function App() {
           </q.div>
           {loading ? (
             <q.h1>Loading...</q.h1>
-          ) : movies ? (
+          ) : movies.length > 0 ? (
             <MovieTable {...{ handleModalOpen, sortHandler, movies }} />
           ) : (
             <q.h2>Find a list of movies by searching above ☝️ </q.h2>
