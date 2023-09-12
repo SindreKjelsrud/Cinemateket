@@ -11,6 +11,8 @@ export const useNavigateToPage = () => {
       if (type) query += `&type=${type}`
       if (year) query += `&year=${year}`
 
+      console.log(query)
+
       navigate(query)
     }
   }

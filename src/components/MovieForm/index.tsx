@@ -11,7 +11,10 @@ const MovieForm: React.FC = () => {
   return (
     <q.form
       className="flex flex-col gap-3 card p-4 rounded-lg w-full lg:px-14"
-      onSubmit={() => navigateToPage(movieTitle, movieYear, movieType)}
+      onSubmit={(e) => {
+        e.preventDefault()
+        navigateToPage(movieTitle, movieYear, movieType)
+      }}
     >
       <q.label>Choose a movie title:</q.label>
       <q.input

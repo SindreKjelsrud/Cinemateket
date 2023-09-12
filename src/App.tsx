@@ -36,7 +36,7 @@ function App() {
     } else {
       setLoading(false)
     }
-  }, [])
+  }, [location.search])
 
   const calculatePages = (totalResults: number): number => {
     return Math.round(totalResults / 10)
