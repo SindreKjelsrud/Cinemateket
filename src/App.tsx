@@ -3,35 +3,39 @@ import './App.css'
 import q from 'qjuul'
 import { MovieForm, Pagination, MovieTable, MovieModal } from './components'
 import type { movieObject } from './types/movie'
+import { fetchMovie } from './api/fetchMovie'
+import { useLocation } from 'react-router'
 
 function App() {
-  const API_MOVIE_KEY = 'd92949d8'
   const [movies, setMovies] = useState<movieObject[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMovie, setModalMovie] = useState<movieObject | null>(null)
-  const [movieType, setMovieType] = useState('')
-  const [movieYear, setMovieYear] = useState('')
-  const [movieTitle, setMovieTitle] = useState('')
   const [sortAscending, setSortAscending] = useState(true)
-
-  console.log('App mounted')
+  const location = useLocation()
 
   useEffect(() => {
-    fetch(
-      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${movieTitle}&page=${currentPage}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setMovies(data.Search)
-        console.log(data)
-        setTotalPages(data.totalResults)
-      })
-      .then(() => setLoading(false))
-      .catch((error) => console.log(error))
-  }, [currentPage])
+    const searchParams = new URLSearchParams(location.search)
+    const title = searchParams.get('title') || ''
+    const page = searchParams.get('page') || ''
+    const type = searchParams.get('type') || ''
+    const year = searchParams.get('y') || ''
+
+    const handleFetchMovie = async () => {
+      const response = await fetchMovie(title, page, type, year)
+      if (response.Response == 'true') {
+        setMovies(response.Search)
+        setTotalPages(Number(response.totalResults))
+        setLoading(false)
+      }
+    }
+
+    if (title) {
+      handleFetchMovie()
+    }
+  }, [])
 
   const calculatePages = (totalResults: number): number => {
     return Math.round(totalResults / 10)
@@ -44,21 +48,6 @@ function App() {
   const handleModalOpen = (movie: movieObject) => {
     setModalOpen(true)
     setModalMovie(movie)
-  }
-
-  const handleMovieSubmit = (event: any) => {
-    event.preventDefault()
-    fetch(
-      `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${movieTitle}&type=${movieType}&y=${movieYear}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setMovies(data.Search)
-        console.log(data)
-        setTotalPages(data.totalResults)
-      })
-      .then(() => setLoading(false))
-      .catch((error) => console.log(error))
   }
 
   const sortHandler = (sortType: string) => {

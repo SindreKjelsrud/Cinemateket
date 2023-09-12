@@ -7,3 +7,9 @@ export type movieObject = {
 }
 
 export type modalMovieType = movieObject | null
+
+export type movieResponse = {
+  Response: string
+  totalResults: string
+  Search: movieObject[]
+}
