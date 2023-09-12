@@ -1,12 +1,23 @@
-import { useState } from 'react'
 import q from 'qjuul'
 import { useNavigateToPage } from '../../util/navigate'
 
-const MovieForm: React.FC = () => {
-  const searchParams = new URLSearchParams(window.location.search)
-  const [movieTitle, setMovieTitle] = useState(searchParams.get('title') || '')
-  const [movieYear, setMovieYear] = useState(searchParams.get('y') || '')
-  const [movieType, setMovieType] = useState(searchParams.get('type') || '')
+interface MovieFormInterface {
+  movieTitle: string
+  movieType: string
+  movieYear: string
+  setMovieTitle: (title: string) => void
+  setMovieType: (type: string) => void
+  setMovieYear: (year: string) => void
+}
+
+const MovieForm: React.FC<MovieFormInterface> = ({
+  movieTitle,
+  movieType,
+  movieYear,
+  setMovieTitle,
+  setMovieType,
+  setMovieYear,
+}) => {
   const navigateToPage = useNavigateToPage()
 
   return (
@@ -14,7 +25,7 @@ const MovieForm: React.FC = () => {
       className="flex flex-col gap-3 card p-4 rounded-lg w-full lg:px-14"
       onSubmit={(e) => {
         e.preventDefault()
-        navigateToPage(movieTitle, movieYear, movieType)
+        navigateToPage(movieTitle, movieType, movieYear)
       }}
     >
       <q.label>Choose a movie title:</q.label>
@@ -28,8 +39,9 @@ const MovieForm: React.FC = () => {
       />
       <q.label>Choose year movie was made: (OPTIONAL)</q.label>
       <q.select
-        className="p-2 rounded-md border text-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+        className="p-2 rounded-md border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         onChange={(e) => setMovieYear(e.target.value)}
+        value={movieYear}
       >
         {/* Option for year 1923-2023 */}
         <q.option value="">All years</q.option>
@@ -44,8 +56,9 @@ const MovieForm: React.FC = () => {
       </q.select>
       <q.label>Choose type: (OPTIONAL)</q.label>
       <q.select
-        className="p-2 rounded-md border text-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+        className="p-2 rounded-md border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         onChange={(e) => setMovieType(e.target.value)}
+        value={movieType}
       >
         <q.option value="">All types</q.option>
         <q.option value="movie">Movies</q.option>
