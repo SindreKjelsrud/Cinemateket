@@ -23,7 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
       setShowRightDots(currentPage < totalPages - 3 ? true : false)
     }
     if (!showLeftDots && !showRightDots) {
-      setShowingNumbers(Array.from(Array(totalPages).keys()))
+      setShowingNumbers(Array.from(Array(totalPages).keys()).map((n) => n + 1))
     }
     if (!showLeftDots && showRightDots) {
       setShowingNumbers([1, 2, 3, 4, 5])

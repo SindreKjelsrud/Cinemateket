@@ -1,6 +1,6 @@
 import { movieResponse } from '../types/movie'
 
-const API_MOVIE_KEY = 'd92949d8'
+const API_MOVIE_KEY = import.meta.env.VITE_MOVIE_API_KEY
 
 export const fetchMovie = async (
   title: string,
@@ -21,6 +21,5 @@ export const fetchMovie = async (
     .catch((error) => {
       console.log('Error:', error)
     })
-
   return response
 }
