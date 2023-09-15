@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace backend;
 
 public class Movie
