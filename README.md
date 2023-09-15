@@ -3,7 +3,7 @@
 
 ## 📝 Oppgavetekst
 
-### Oppgave 1
+### ➡️ Oppgave 1
 1. Lag en webside som viser en tabell av informasjon fra et API online.
 > 1.5. API-kravspesifikasjon:  
 > 1. Støtte for pagination i api'et  
@@ -20,7 +20,7 @@
 
 5. Legg til støtte for pagination, gjennom å bruke api'et.
 
-### Oppgave 2
+### ➡️ Oppgave 2
 Sett opp ett .NET REST api prosjekt. Dette må kunne koble seg på en postgresql database. Helst med code first logikk, og bruke migrations for å gjøre endringer på databasen. For å snakke med databasen brukes Entity Framework og LINQ.
 
 Legg til filmer i databasen. Dette kan gjøres på følgende 2 måter:
@@ -33,6 +33,8 @@ Erstatt api-kallene i oppgave 1, med deres egne kall. API'et skal ha støtte for
 Legg til støtte for å kunne legge til og slette filmer i databasen.
 
 Lag en enkel innloggingsside og autentisering på nettsiden.
+
+> Bonus: Legg gjerne til Swagger i oppgaven, da dette er noe som er veldig vanlig å bruke.
 
 ## 🏗️ Teknologier
 Ettersom vi skulle bruke React i oppgave 1 så har vi valgt å bruke Vite React med Typescript for dette prosjektet.
