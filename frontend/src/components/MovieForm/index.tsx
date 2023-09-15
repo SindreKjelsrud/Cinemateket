@@ -1,38 +1,47 @@
 import q from 'qjuul'
+import { useNavigateToPage } from '../../util/navigate'
 
-interface MovieFormProps {
-  handleMovieSubmit: (event: any) => void
-  setMovieTitle: (title: string) => void
-  setMovieYear: (year: string) => void
-  setMovieType: (type: string) => void
+interface MovieFormInterface {
   movieTitle: string
+  movieType: string
+  movieYear: string
+  setMovieTitle: (title: string) => void
+  setMovieType: (type: string) => void
+  setMovieYear: (year: string) => void
 }
 
-const MovieForm: React.FC<MovieFormProps> = ({
-  handleMovieSubmit,
+const MovieForm: React.FC<MovieFormInterface> = ({
+  movieTitle,
+  movieType,
+  movieYear,
   setMovieTitle,
   setMovieType,
   setMovieYear,
-  movieTitle,
 }) => {
+  const navigateToPage = useNavigateToPage()
+
   return (
     <q.form
       className="flex flex-col gap-3 card p-4 rounded-lg w-full lg:px-14"
-      onSubmit={(event) => handleMovieSubmit({ event: event })}
+      onSubmit={(e) => {
+        e.preventDefault()
+        navigateToPage(movieTitle, movieType, movieYear)
+      }}
     >
       <q.label>Choose a movie title:</q.label>
       <q.input
         type="text"
         id="movieTitle"
         placeholder="Movie title"
-        value={movieTitle.length > 0 ? movieTitle : ''}
+        value={movieTitle.charAt(0).toUpperCase() + movieTitle.slice(1)}
         onChange={(e) => setMovieTitle(e.target.value)}
         className="border text-black border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
       />
       <q.label>Choose year movie was made: (OPTIONAL)</q.label>
       <q.select
-        className="p-2 rounded-md border text-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+        className="p-2 rounded-md border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         onChange={(e) => setMovieYear(e.target.value)}
+        value={movieYear}
       >
         {/* Option for year 1923-2023 */}
         <q.option value="">All years</q.option>
@@ -47,8 +56,9 @@ const MovieForm: React.FC<MovieFormProps> = ({
       </q.select>
       <q.label>Choose type: (OPTIONAL)</q.label>
       <q.select
-        className="p-2 rounded-md border text-gray-500 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+        className="p-2 rounded-md border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         onChange={(e) => setMovieType(e.target.value)}
+        value={movieType}
       >
         <q.option value="">All types</q.option>
         <q.option value="movie">Movies</q.option>

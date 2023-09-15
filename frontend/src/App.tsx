@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react'
+import './App.css'
+import q from 'qjuul'
 import { MovieForm, Pagination, MovieTable, MovieModal } from './components'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useEffect, useState, FormEvent } from 'react'
 import type { movieObject } from './types/movie'
 import { fetchMovie } from './api/fetchMovie'
-import q from 'qjuul'
-import './App.css'
+import { useLocation } from 'react-router-dom'
+import { useNavigateToPage } from './util/navigate'
 
 function App() {
   const [movies, setMovies] = useState<movieObject[]>([])
@@ -13,61 +14,37 @@ function App() {
   const [totalPages, setTotalPages] = useState(0)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMovie, setModalMovie] = useState<movieObject | null>(null)
-  const [movieType, setMovieType] = useState('')
-  const [movieYear, setMovieYear] = useState('')
-  const [movieTitle, setMovieTitle] = useState('')
+  const navigateToPage = useNavigateToPage()
+  const searchParams = new URLSearchParams(window.location.search)
+  const [movieTitle, setMovieTitle] = useState(searchParams.get('title') || '')
+  const [movieYear, setMovieYear] = useState(searchParams.get('year') || '')
+  const [movieType, setMovieType] = useState(searchParams.get('type') || '')
   const [sortAscending, setSortAscending] = useState(true)
-
-  const navigate = useNavigate()
   const location = useLocation()
-  const searchParams = new URLSearchParams(location.search)
-  const title = searchParams.get('title') || ''
-  const type = searchParams.get('type') || ''
-  const year = searchParams.get('y') || ''
-  const page = searchParams.get('page') || ''
 
   useEffect(() => {
-    handleMovieSubmit()
-  }, [title, type, year])
-
-  const handleMovieSubmit = async ({
-    event,
-    pageNumber,
-  }: {
-    event?: FormEvent
-    pageNumber?: number
-  } = {}) => {
-    if (event) event.preventDefault()
-
-    let pageNum: number
-    if (pageNumber) {
-      pageNum = pageNumber
-    } else {
-      pageNum = Number(page)
-    }
-
-    if (!title && !type && !year) {
-      navigate('')
-      setLoading(false)
-    } else {
-      navigate(
-        movieYear && movieType
-          ? `?title=${movieTitle}&type=${movieType}&y=${movieYear}&page=${pageNum}`
-          : movieYear
-          ? `?title=${movieTitle}&y=${movieYear}&page=${pageNum}`
-          : movieYear && movieType
-          ? `?title=${movieTitle}&type=${movieType}&page=${pageNum}`
-          : `?title=${movieTitle}&page=${pageNum}`
-      )
-
-      const response = await fetchMovie(title, type, year, pageNum)
-      if (response.Response === 'True') {
+    const handleFetchMovie = async () => {
+      const response = await fetchMovie(title, page, type, year)
+      console.log(year)
+      if (response.Response == 'True') {
         setMovies(response.Search)
-        setTotalPages(response.totalResults)
+        setTotalPages(Number(response.totalResults))
+        setCurrentPage(Number(page))
         setLoading(false)
       }
     }
-  }
+    const searchParams = new URLSearchParams(location.search)
+    const title = searchParams.get('title') || ''
+    const page = searchParams.get('page') || ''
+    const type = searchParams.get('type') || ''
+    const year = searchParams.get('year') || ''
+
+    if (title) {
+      handleFetchMovie()
+    } else {
+      setLoading(false)
+    }
+  }, [location.search])
 
   const calculatePages = (totalResults: number): number => {
     return Math.round(totalResults / 10)
@@ -75,7 +52,7 @@ function App() {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
-    handleMovieSubmit({ pageNumber })
+    navigateToPage(movieTitle, movieType, movieYear, pageNumber.toString())
   }
 
   const handleModalOpen = (movie: movieObject) => {
@@ -110,18 +87,25 @@ function App() {
       <q.div className="flex flex-col justify-center items-center mx-auto  w-3/4 md:w-3/5 lg:w-2/4">
         <MovieModal {...{ setModalOpen, modalMovie, modalOpen }} />
         <q.div className="flex flex-col w-full items-center">
-          <q.h1 className="py-4">All movies</q.h1>
+          <q.h1
+            onClick={() => navigateToPage()}
+            className="py-8 hover:cursor-pointer text-red-800 text-5xl font-bold"
+            co="rgb(220 38 38)"
+          >
+            Cinemateket
+          </q.h1>
           <MovieForm
             {...{
-              handleMovieSubmit,
+              movieTitle,
+              movieType,
+              movieYear,
               setMovieTitle,
               setMovieType,
               setMovieYear,
-              movieTitle,
             }}
           />
           <q.div className="flex pt-10">
-            {!loading && totalPages > 0 && (
+            {!loading && movies.length > 0 && (
               <Pagination
                 currentPage={currentPage}
                 totalPages={calculatePages(totalPages)}
