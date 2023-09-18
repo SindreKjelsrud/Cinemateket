@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  movie-database:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: moviedatabase
+    ports:
+      - "5432:5432"
