@@ -7,5 +7,5 @@ public class MovieDbContext: DbContext
     {
     }
 
-    public DbSet<Movie> Movies { get; set; }
+    public DbSet<MovieDB> Movies { get; set; }
 }
