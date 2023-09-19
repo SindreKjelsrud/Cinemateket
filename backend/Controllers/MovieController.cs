@@ -16,9 +16,30 @@ public class MovieController: ControllerBase
         _context = context;
     }
 
-    [HttpGet(Name = "GetMovie")]
-    public IEnumerable<MovieDB> Get()
+    [HttpGet(Name = "GetMovies")]
+    public ActionResult<IEnumerable<MovieDB>> Get([FromQuery]int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
-        return _context.Movies.ToList();
+    try
+        {
+            var movies = _context.Movies.ToList();
+            return Ok(movies);
+        }
+    catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching movies");
+            return StatusCode(500, "Internal server error");
+        }
     }
+
+    // [HttpPost(Name = "PostMovie")]
+    // public ActionResult<> Post([FromQuery] string movieTitle) {
+    //     try 
+    //     {
+
+    //     }
+    //     catch (Exception ex)
+    //     {
+
+    //     }
+    // }
 }
