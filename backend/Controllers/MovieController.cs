@@ -29,6 +29,10 @@ public class MovieController: ControllerBase
             IEnumerable<MovieDB> resultSkip = movies.Skip(pageSize * (pageNumber - 1));
             IEnumerable<MovieDB> resultTake = resultSkip.Take(pageSize);
 
+            if (resultTake.ToList().Count == 0) {
+                return StatusCode(204, "No Content");
+            }
+
             return Ok(resultTake);
         }
     catch (Exception ex)
