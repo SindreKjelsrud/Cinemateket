@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Writers;
 
 namespace backend.Controllers;
 
@@ -6,24 +7,18 @@ namespace backend.Controllers;
 [Route("[controller]")]
 public class MovieController: ControllerBase
 {
+    private readonly MovieDbContext _context;
     private readonly ILogger<MovieController> _logger;
 
-    public MovieController(ILogger<MovieController> logger)
+    public MovieController(ILogger<MovieController> logger, MovieDbContext context)
     {
         _logger = logger;
+        _context = context;
     }
 
     [HttpGet(Name = "GetMovie")]
-    public IEnumerable<Movie> Get()
+    public IEnumerable<MovieDB> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new Movie
-        {
-            Title = "Title",
-            Year = "Year",
-            imdbID = "imdbID",
-            Type = "Type",
-            Poster = "Poster"
-        })
-        .ToArray();
+        return _context.Movies.ToList();
     }
 }
