@@ -17,13 +17,30 @@ public class MovieController: ControllerBase
     }
 
     [HttpGet(Name = "GetMovies")]
-    public ActionResult<IEnumerable<MovieDB>> Get([FromQuery]int pageNumber = 1, [FromQuery] int pageSize = 5)
-    {
+    public ActionResult<IEnumerable<MovieDB>> Get(
+        [FromQuery] string? s,
+        [FromQuery] string? type,
+        [FromQuery] string? y,
+        [FromQuery] int pageNumber = 1, 
+        [FromQuery] int pageSize = 5
+    ) {
     try
         {
-            var movies = _context.Movies.ToList();
+            if (s == "") {
+                return StatusCode(400, "Bad Request");
+            }
             
-            var totalMovies = movies.Count;
+            var movies = _context.Movies.Where(m => m.Title.Contains(s.ToLower()));
+
+            if (type != null) {
+                movies = movies.Where(m => m.Type == type);
+            }
+
+            if (y != null) {
+                movies = movies.Where(m => m.Year == y);
+            }
+
+            var totalMovies = movies.Count();
             var totalPages = Math.Ceiling((double)totalMovies / pageSize);
 
             IEnumerable<MovieDB> resultSkip = movies.Skip(pageSize * (pageNumber - 1));
