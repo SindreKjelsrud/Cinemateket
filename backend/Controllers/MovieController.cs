@@ -47,8 +47,12 @@ public class MovieController: ControllerBase
 
             if (sort != null) {
                 if (!IsValidSort(sort)) return StatusCode(400, "Bad Request: Invalid sort-type");
-                
-            }
+                if (sort == "titleasc") movies = movies.OrderBy(m => m.Title);
+                if (sort == "titledesc") movies = movies.OrderByDescending(m => m.Title);
+                if (sort == "yearasc") movies = movies.OrderBy(m => m.Year);
+                if (sort == "yeardesc") movies = movies.OrderByDescending(m => m.Year);
+            }   
+
 
             if (!IsValidPageNumber(pageNumber) || !IsValidPageSize(pageSize)) 
                 return StatusCode(400, "Bad Request: Invalid page-size or page-number");
