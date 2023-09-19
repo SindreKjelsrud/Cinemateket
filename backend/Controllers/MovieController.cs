@@ -22,7 +22,14 @@ public class MovieController: ControllerBase
     try
         {
             var movies = _context.Movies.ToList();
-            return Ok(movies);
+            
+            var totalMovies = movies.Count;
+            var totalPages = Math.Ceiling((double)totalMovies / pageSize);
+
+            IEnumerable<MovieDB> resultSkip = movies.Skip(pageSize * (pageNumber - 1));
+            IEnumerable<MovieDB> resultTake = resultSkip.Take(pageSize);
+
+            return Ok(resultTake);
         }
     catch (Exception ex)
         {
