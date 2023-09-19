@@ -1,11 +1,11 @@
-Id,Title,Year,imdbID,Type,Poster
-0,The Shawshank Redemption,1994,tt0111161,Movie,https://example.com/poster1.jpg
-1,The Godfather,1972,tt0068646,Movie,https://example.com/poster2.jpg
-2,Pulp Fiction,1994,tt0110912,Movie,https://example.com/poster3.jpg
-3,The Dark Knight,2008,tt0468569,Movie,https://example.com/poster4.jpg
-4,Schindler's List,1993,tt0108052,Movie,https://example.com/poster5.jpg
-5,Forrest Gump,1994,tt0109830,Movie,https://example.com/poster6.jpg
-6,Inception,2010,tt1375666,Movie,https://example.com/poster7.jpg
-7,The Matrix,1999,tt0133093,Movie,https://example.com/poster8.jpg
-8,The Lord of the Rings: The Fellowship of the Ring,2001,tt0120737,Movie,https://example.com/poster9.jpg
-9,The Silence of the Lambs,1991,tt0102926,Movie,https://example.com/poster10.jpg
+Title,Year,imdbID,Type,Poster
+The Shawshank Redemption,1994,tt0111161,Movie,https://example.com/poster1.jpg
+The Godfather,1972,tt0068646,Movie,https://example.com/poster2.jpg
+Pulp Fiction,1994,tt0110912,Movie,https://example.com/poster3.jpg
+The Dark Knight,2008,tt0468569,Movie,https://example.com/poster4.jpg
+Schindler's List,1993,tt0108052,Movie,https://example.com/poster5.jpg
+Forrest Gump,1994,tt0109830,Movie,https://example.com/poster6.jpg
+Inception,2010,tt1375666,Movie,https://example.com/poster7.jpg
+The Matrix,1999,tt0133093,Movie,https://example.com/poster8.jpg
+The Lord of the Rings: The Fellowship of the Ring,2001,tt0120737,Movie,https://example.com/poster9.jpg
+The Silence of the Lambs,1991,tt0102926,Movie,https://example.com/poster10.jpg

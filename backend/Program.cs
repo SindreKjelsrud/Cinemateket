@@ -32,7 +32,6 @@ using (var scope = services.CreateScope())
         using (var reader = new StreamReader("public/DbMockData.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<MovieDBMap>();
             var records = csv.GetRecords<MovieDB>().ToList();
             context.Movies.AddRange(records);
             context.SaveChanges();

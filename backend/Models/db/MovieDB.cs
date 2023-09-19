@@ -6,11 +6,9 @@ using System.Globalization;
 
 namespace backend;
 
-// [PrimaryKey(nameof(Id))]
+[PrimaryKey(nameof(imdbID))]
 public class MovieDB
 {
-    public int Id { get; set; }
-
     public string Title { get; set; }
 
     public string Year { get; set; }
@@ -20,14 +18,4 @@ public class MovieDB
     public string Type { get; set; }
 
     public string Poster { get; set; }
-}
-
-
-public class MovieDBMap : ClassMap<MovieDB>
-{
-    public MovieDBMap()
-    {
-        AutoMap(CultureInfo.InvariantCulture);
-        Map(m => m.Id).Ignore();
-    }
 }

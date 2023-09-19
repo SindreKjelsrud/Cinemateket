@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20230918090830_V1__init")]
+    [Migration("20230919073410_V1__init")]
     partial class V1__init
     {
         /// <inheritdoc />
@@ -25,11 +25,8 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.MovieDB", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("imdbID")
+                        .HasColumnType("text");
 
                     b.Property<string>("Poster")
                         .HasColumnType("text");
@@ -43,10 +40,7 @@ namespace backend.Migrations
                     b.Property<string>("Year")
                         .HasColumnType("text");
 
-                    b.Property<string>("imdbID")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
+                    b.HasKey("imdbID");
 
                     b.ToTable("Movies");
                 });
