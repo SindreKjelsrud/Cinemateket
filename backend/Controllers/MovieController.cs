@@ -32,8 +32,8 @@ public class MovieController: ControllerBase
     ) {
     try
         {
-            if (IsValidS(s)) return StatusCode(400, "Bad Request: Invalid title");
-            var movies = _context.Movies.Where(m => m.Title.Contains(s.ToLower()));
+            if (!IsValidS(s)) return StatusCode(400, "Bad Request: Invalid title");
+            var movies = _context.Movies.Where(m => m.Title.ToLower().Contains(s.ToLower()));
 
             if (type != null) {
                 if (!IsValidType(type)) return StatusCode(400, "Bad Request: Invalid type");
