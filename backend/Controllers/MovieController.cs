@@ -124,4 +124,35 @@ public class MovieController: ControllerBase
             return StatusCode(500, "Internal server error");
         }
     }
+
+    [HttpPut(Name = "PutMovie")]
+    public ActionResult Put(
+        [FromQuery] string? s, 
+        [FromQuery] string? y,
+        [FromQuery] string imdbID,
+        [FromQuery] string? type,
+        [FromQuery] string? poster
+    ) {
+        try 
+        {
+            var movie = _context.Movies.AsEnumerable()
+                        .Where(m => m.imdbID.ToLower().Contains(imdbID.ToLower()))
+                        .ElementAtOrDefault(0);
+            if (movie != null) {
+                if (s != null) movie.Title = s;
+                if (y != null) movie.Year = y;
+                if (type != null) movie.Type = type;
+                if (poster != null) movie.Poster = poster;
+                _context.SaveChanges();
+                return Ok("Successfully edited movie");
+            } else {
+                return StatusCode(409, "Conflict, imdbID doesn't exists");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting movie");
+            return StatusCode(500, "Internal server error");
+        }
+    }
 }
