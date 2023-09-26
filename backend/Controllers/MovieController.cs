@@ -102,4 +102,26 @@ public class MovieController: ControllerBase
             return StatusCode(500, "Internal server error");
         }
     }
+
+    [HttpDelete(Name = "DeleteMovie")]
+    public ActionResult Delete([FromQuery] string imdbID) {
+        try 
+        {
+            var movie = _context.Movies.AsEnumerable()
+                        .Where(m => m.imdbID.ToLower().Contains(imdbID.ToLower()))
+                        .ElementAtOrDefault(0);
+            if (movie != null) {
+                _context.Remove(movie);
+                _context.SaveChanges();
+                return Ok("Successfully deleted movie");
+            } else {
+                return StatusCode(409, "Conflict, imdbID doesn't exists");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting movie");
+            return StatusCode(500, "Internal server error");
+        }
+    }
 }
