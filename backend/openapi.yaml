@@ -31,7 +31,7 @@ paths:
           in: query
           description: Year of release
           required: false
-          type: integer
+          type: string
         - name: type
           in: query
           description: Return movie or series
@@ -82,32 +82,33 @@ paths:
         - name: y
           in: query
           description: Year of release
-          required: false
-          type: integer
+          required: true
+          type: string
+        - name: imdbID
+          in: query
+          description: ImdbID of movie
+          required: true
+          type: string
         - name: type
           in: query
-          description: Return movie or series
-          required: false
+          description: Movie or series
+          required: true
           type: string
           enum:
             - movie
             - series
-        - name: pageNumber
+        - name: poster
           in: query
-          description: Page number to return
-          required: false
-          type: integer
-        - name: pageSize
-          in: query
-          description: Size of pages to return
-          type: integer
+          description: Poster of movie
+          required: true
+          type: string
       responses:
         '200':
           description: Successful operation
-        '204':
-          description: No content
         '400':
           description: Bad request
+        '409':
+          description: Conflict
         '500':
           description: Internal server error
     put:
@@ -116,10 +117,15 @@ paths:
       summary: Make changes to an existing movie
       operationId: titleSearch
       parameters:
+        - name: imdbID
+          in: query
+          description: ImdbID of movie
+          required: true
+          type: string
         - name: s
           in: query
           description: Title of movie or series
-          required: true
+          required: false
           type: string
         - name: y
           in: query
@@ -128,28 +134,24 @@ paths:
           type: integer
         - name: type
           in: query
-          description: Return movie or series
+          description: Movie or series
           required: false
           type: string
           enum:
             - movie
             - series
-        - name: pageNumber
+        - name: poster
           in: query
-          description: Page number to return
+          description: Poster of movie
           required: false
-          type: integer
-        - name: pageSize
-          in: query
-          description: Size of pages to return
-          type: integer
+          type: string
       responses:
         '200':
           description: Successful operation
-        '204':
-          description: No content
         '400':
           description: Bad request
+        '409':
+          description: Conflict
         '500':
           description: Internal server error
     delete:
@@ -158,39 +160,17 @@ paths:
       summary: Deletes a movie with a given title or imdbID
       operationId: titleSearch
       parameters:
-        - name: s
+        - name: imdbID
           in: query
-          description: Title of movie or series
+          description: ImdbID of movie
           required: true
           type: string
-        - name: y
-          in: query
-          description: Year of release
-          required: false
-          type: integer
-        - name: type
-          in: query
-          description: Return movie or series
-          required: false
-          type: string
-          enum:
-            - movie
-            - series
-        - name: pageNumber
-          in: query
-          description: Page number to return
-          required: false
-          type: integer
-        - name: pageSize
-          in: query
-          description: Size of pages to return
-          type: integer
       responses:
         '200':
           description: Successful operation
-        '204':
-          description: No content
         '400':
           description: Bad request
+        '409':
+          description: Conflict
         '500':
           description: Internal server error
