@@ -76,15 +76,30 @@ public class MovieController: ControllerBase
         }
     }
 
-    // [HttpPost(Name = "PostMovie")]
-    // public ActionResult<> Post([FromQuery] string movieTitle) {
-    //     try 
-    //     {
-
-    //     }
-    //     catch (Exception ex)
-    //     {
-
-    //     }
-    // }
+    [HttpPost(Name = "PostMovie")]
+    public ActionResult Post(
+        [FromQuery] string s, 
+        [FromQuery] string y,
+        [FromQuery] string imdbID,
+        [FromQuery] string type,
+        [FromQuery] string poster
+    ) {
+        try 
+        {
+            MovieDB newMovie = new(s, y, imdbID, type, poster);
+            var movies = _context.Movies.Where(m => m.imdbID.ToLower().Contains(imdbID.ToLower()));
+            if (movies.Count() == 0) {
+                _context.Add(newMovie);
+                _context.SaveChanges();
+                return Ok("Successfully added new movie");
+            } else {
+                return StatusCode(409, "Conflict, imdbID already exists");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error posting movie");
+            return StatusCode(500, "Internal server error");
+        }
+    }
 }

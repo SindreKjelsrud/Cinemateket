@@ -18,4 +18,12 @@ public class MovieDB
     public string Type { get; set; }
 
     public string Poster { get; set; }
+
+    public MovieDB(string Title, string Year, string imdbID, string Type, string Poster) {
+        this.Title = Title;
+        this.Year = Year;
+        this.imdbID = imdbID;
+        this.Type = Type;
+        this.Poster = Poster;
+    }
 }
