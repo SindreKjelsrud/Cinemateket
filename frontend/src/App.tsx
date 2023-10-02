@@ -26,8 +26,8 @@ function App() {
     const handleFetchMovie = async () => {
       const response = await fetchMovie(title, page, type, year)
       console.log(year)
-      if (response.Response == 'True') {
-        setMovies(response.Search)
+      if (response.response == 'OK') {
+        setMovies(response.search)
         setTotalPages(Number(response.totalResults))
         setCurrentPage(Number(page))
         setLoading(false)
@@ -66,15 +66,15 @@ function App() {
     if (sortType === 's') {
       sortedMovies = [...movies].sort((m1, m2) =>
         sortAscending
-          ? m1.Title.localeCompare(m2.Title)
-          : m2.Title.localeCompare(m1.Title)
+          ? m1.title.localeCompare(m2.title)
+          : m2.title.localeCompare(m1.title)
       )
     }
     if (sortType === 'y') {
       sortedMovies = [...movies].sort((m1, m2) =>
         sortAscending
-          ? m1.Year.localeCompare(m2.Year)
-          : m2.Year.localeCompare(m1.Year)
+          ? m1.year.localeCompare(m2.year)
+          : m2.year.localeCompare(m1.year)
       )
     }
 

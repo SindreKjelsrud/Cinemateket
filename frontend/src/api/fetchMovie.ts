@@ -1,4 +1,4 @@
-import { movieResponse } from '../types/movie'
+import { movieObject, movieResponse } from '../types/movie'
 
 //const API_MOVIE_KEY = import.meta.env.VITE_MOVIE_API_KEY
 
@@ -16,6 +16,7 @@ export const fetchMovie = async (
   const response = await fetch(query)
     .then((response) => response.json())
     .then((data) => {
+      console.log(data.search)
       return data
     })
     .catch((error) => {
