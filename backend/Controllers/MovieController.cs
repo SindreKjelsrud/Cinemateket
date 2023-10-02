@@ -1,3 +1,4 @@
+using System.Collections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Writers;
 
@@ -23,7 +24,7 @@ public class MovieController: ControllerBase
 
     [HttpGet(Name = "GetMovies")]
     public ActionResult<IEnumerable<MovieDB>> Get(
-        [FromQuery] string s,
+        [FromQuery] string? s,
         [FromQuery] string? type,
         [FromQuery] string? y,
         [FromQuery] string? sort,
@@ -32,8 +33,11 @@ public class MovieController: ControllerBase
     ) {
     try
         {
-            if (!IsValidS(s)) return StatusCode(400, "Bad Request: Invalid title");
-            var movies = _context.Movies.Where(m => m.Title.ToLower().Contains(s.ToLower()));
+            var movies = _context.Movies.AsQueryable();
+            if (s != null) {
+                if (!IsValidS(s)) return StatusCode(400, "Bad Request: Invalid title");
+                movies = _context.Movies.Where(m => m.Title.ToLower().Contains(s.ToLower()));
+            }
 
             if (type != null) {
                 if (!IsValidType(type)) return StatusCode(400, "Bad Request: Invalid type");
