@@ -8,10 +8,10 @@ export const useNavigateToPage = () => {
       navigate('')
       window.location.reload()
     } else {
-      let query = `?title=${title}&page=${page}`
+      let query = `?s=${title}&page=${page}`
 
       if (type) query += `&type=${type}`
-      if (year) query += `&year=${year}`
+      if (year) query += `&y=${year}`
 
       navigate(query)
     }

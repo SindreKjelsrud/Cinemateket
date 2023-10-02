@@ -16,8 +16,8 @@ function App() {
   const [modalMovie, setModalMovie] = useState<movieObject | null>(null)
   const navigateToPage = useNavigateToPage()
   const searchParams = new URLSearchParams(window.location.search)
-  const [movieTitle, setMovieTitle] = useState(searchParams.get('title') || '')
-  const [movieYear, setMovieYear] = useState(searchParams.get('year') || '')
+  const [movieTitle, setMovieTitle] = useState(searchParams.get('s') || '')
+  const [movieYear, setMovieYear] = useState(searchParams.get('y') || '')
   const [movieType, setMovieType] = useState(searchParams.get('type') || '')
   const [sortAscending, setSortAscending] = useState(true)
   const location = useLocation()
@@ -34,10 +34,10 @@ function App() {
       }
     }
     const searchParams = new URLSearchParams(location.search)
-    const title = searchParams.get('title') || ''
+    const title = searchParams.get('s') || ''
     const page = searchParams.get('page') || ''
     const type = searchParams.get('type') || ''
-    const year = searchParams.get('year') || ''
+    const year = searchParams.get('y') || ''
 
     if (title) {
       handleFetchMovie()
@@ -63,14 +63,14 @@ function App() {
   const sortHandler = (sortType: string) => {
     let sortedMovies: movieObject[] = []
 
-    if (sortType === 'title') {
+    if (sortType === 's') {
       sortedMovies = [...movies].sort((m1, m2) =>
         sortAscending
           ? m1.Title.localeCompare(m2.Title)
           : m2.Title.localeCompare(m1.Title)
       )
     }
-    if (sortType === 'year') {
+    if (sortType === 'y') {
       sortedMovies = [...movies].sort((m1, m2) =>
         sortAscending
           ? m1.Year.localeCompare(m2.Year)

@@ -1,6 +1,6 @@
 import { movieResponse } from '../types/movie'
 
-const API_MOVIE_KEY = import.meta.env.VITE_MOVIE_API_KEY
+//const API_MOVIE_KEY = import.meta.env.VITE_MOVIE_API_KEY
 
 export const fetchMovie = async (
   title: string,
@@ -8,7 +8,7 @@ export const fetchMovie = async (
   type?: string,
   year?: string
 ): Promise<movieResponse> => {
-  let query = `http://www.omdbapi.com/?apikey=${API_MOVIE_KEY}&s=${title}&page=${page}`
+  let query = `http://localhost:5212/movie?s=${title}&page=${page}`
 
   if (type) query += `&type=${type}`
   if (year) query += `&y=${year}`
