@@ -38,14 +38,13 @@ using (var scope = services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<MovieDbContext>();
     context.Database.EnsureCreated();
 
-    using (context) 
-    {
-        context.Database.Migrate();
-    }
-
     // Check if movies are already inserted to avoid duplicate insertion
     if (!context.Movies.Any())
     {
+        using (context) 
+        {
+            context.Database.Migrate();
+        }
         using (var reader = new StreamReader("public/DbMockData.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
