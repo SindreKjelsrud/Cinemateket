@@ -36,11 +36,8 @@ var services = builder.Services.BuildServiceProvider();
 using (var scope = services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<MovieDbContext>();
-    
-    if (context.Database.EnsureCreated())
-    {
-        context.Database.Migrate();
-    }
+    context.Database.EnsureDeleted(); // cursed
+    context.Database.Migrate();
 
     // Check if movies are already inserted to avoid duplicate insertion
     if (!context.Movies.Any())
