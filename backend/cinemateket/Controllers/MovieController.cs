@@ -71,7 +71,7 @@ public class MovieController: ControllerBase
                 return StatusCode(204, "No Content");
             }
 
-            MovieResponse Response = new MovieResponse("OK", resultTake.Count(), resultTake);
+            MovieResponse Response = new MovieResponse("OK", totalMovies, pageNumber ,resultTake);
 
             return Ok(Response);
         }

@@ -36,15 +36,15 @@ var services = builder.Services.BuildServiceProvider();
 using (var scope = services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<MovieDbContext>();
-    context.Database.EnsureCreated();
+    
+    if (context.Database.EnsureCreated())
+    {
+        context.Database.Migrate();
+    }
 
     // Check if movies are already inserted to avoid duplicate insertion
     if (!context.Movies.Any())
     {
-        using (context) 
-        {
-            context.Database.Migrate();
-        }
         using (var reader = new StreamReader("public/DbMockData.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
