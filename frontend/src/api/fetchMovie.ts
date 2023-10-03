@@ -1,4 +1,4 @@
-import { movieObject, movieResponse } from '../types/movie'
+import { movieResponse } from '../types/movie'
 
 //const API_MOVIE_KEY = import.meta.env.VITE_MOVIE_API_KEY
 

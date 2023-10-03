@@ -38,6 +38,11 @@ using (var scope = services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<MovieDbContext>();
     context.Database.EnsureCreated();
 
+    using (context) 
+    {
+        context.Database.Migrate();
+    }
+
     // Check if movies are already inserted to avoid duplicate insertion
     if (!context.Movies.Any())
     {

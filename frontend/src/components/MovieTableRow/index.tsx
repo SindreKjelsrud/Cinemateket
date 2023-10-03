@@ -1,7 +1,6 @@
 import type { movieObject } from '../../types/movie'
 import Modal from 'react-modal'
 import q from 'qjuul'
-import { useState } from 'react'
 
 interface MovieTableRowProps {
   movie: movieObject
