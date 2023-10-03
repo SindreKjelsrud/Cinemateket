@@ -39,7 +39,7 @@ Lag en enkel innloggingsside og autentisering på nettsiden.
 ## 🏗️ Teknologier
 Ettersom vi skulle bruke React i oppgave 1 så har vi valgt å bruke Vite React med Typescript for dette prosjektet.
 
-I oppgave 2 bruker vi C# med dotNET rammeverket, og har PostgreSQL database. 
+I oppgave 2 bruker vi C# med dotNET rammeverket, og har PostgreSQL database i en Docker-container. 
 
 ## 🛠️ Hvordan kjøre lokalt
 
@@ -62,7 +62,4 @@ I oppgave 2 bruker vi C# med dotNET rammeverket, og har PostgreSQL database.
    git clone https://github.com/SindreKjelsrud/Cinemateket.git
    cd Cinemateket/backend
    ```
-3. Enten kan du kjøre `./start.sh` eller følge stegene under selv:
-> 3.5.1. Først må docker-containeren kjøres med:  ***`docker-compose up -d`***
-
-> 3.5.2. Deretter start opp backenden med: ***`dotnet run`***
+3. For å sette opp resten så kan du kjøre: `bash start.sh` 
