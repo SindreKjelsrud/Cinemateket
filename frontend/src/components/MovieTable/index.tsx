@@ -1,6 +1,6 @@
 import type { movieObject } from '../../types/movie'
 import q from 'qjuul'
-import MovieTableRow from '../MovieTableRow'
+import MovieTableRow from './MovieTableRow'
 import arrow from '../../../public/arrow-down-up-svgrepo-com.svg'
 
 interface MovieTableProps {

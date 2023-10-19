@@ -1,5 +1,5 @@
 import q from 'qjuul'
-import PaginationButton from '../PaginationButton'
+import PaginationButton from './PaginationButton'
 import { useEffect, useState } from 'react'
 
 interface PaginationProps {

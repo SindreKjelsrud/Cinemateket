@@ -23,13 +23,13 @@ const MovieModal: React.FC<MovieModalProps> = ({
       <q.div className="flex">
         <q.img
           className="h-44 max-w-sm mx-auto mb-4 rounded-md shadow"
-          src={modalMovie?.Poster}
-          alt={modalMovie?.Title}
+          src={modalMovie?.poster}
+          alt={modalMovie?.title}
         />
         <q.div className="flex flex-col px-10 pt-5">
-          <q.h1 className="text-xl font-bold mb-4">{modalMovie?.Title}</q.h1>
-          <q.p>Year: {modalMovie?.Year}</q.p>
-          <q.p>Type: {modalMovie?.Type}</q.p>
+          <q.h1 className="text-xl font-bold mb-4">{modalMovie?.title}</q.h1>
+          <q.p>Year: {modalMovie?.year}</q.p>
+          <q.p>Type: {modalMovie?.type}</q.p>
           <q.a
             className='"underline text-blue-500 hover:text-blue-700"'
             href={`https://www.imdb.com/title/${modalMovie?.imdbID}`}

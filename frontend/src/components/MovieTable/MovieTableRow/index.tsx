@@ -1,4 +1,4 @@
-import type { movieObject } from '../../types/movie'
+import type { movieObject } from '../../../types/movie'
 import Modal from 'react-modal'
 import q from 'qjuul'
 
