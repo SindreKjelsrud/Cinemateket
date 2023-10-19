@@ -98,9 +98,9 @@ public class MovieController: ControllerBase
                 _context.Add(newMovie);
                 _context.SaveChanges();
                 return Ok("Successfully added new movie");
-            } else {
-                return StatusCode(409, "Conflict, imdbID already exists");
-            }
+            } 
+            return StatusCode(409, "Conflict, imdbID already exists");
+            
         }
         catch (Exception ex)
         {
@@ -115,14 +115,14 @@ public class MovieController: ControllerBase
         {
             var movie = _context.Movies.AsEnumerable()
                         .Where(m => m.imdbID.ToLower().Contains(imdbID.ToLower()))
-                        .ElementAtOrDefault(0);
+                        .SingleOrDefault();
             if (movie != null) {
                 _context.Remove(movie);
                 _context.SaveChanges();
                 return Ok("Successfully deleted movie");
-            } else {
-                return StatusCode(409, "Conflict, imdbID doesn't exists");
-            }
+            } 
+            return StatusCode(409, "Conflict, imdbID doesn't exists");
+            
         }
         catch (Exception ex)
         {
@@ -143,7 +143,7 @@ public class MovieController: ControllerBase
         {
             var movie = _context.Movies.AsEnumerable()
                         .Where(m => m.imdbID.ToLower().Contains(imdbID.ToLower()))
-                        .ElementAtOrDefault(0);
+                        .SingleOrDefault();
             if (movie != null) {
                 if (s != null) movie.Title = s;
                 if (y != null) movie.Year = y;
@@ -151,9 +151,9 @@ public class MovieController: ControllerBase
                 if (poster != null) movie.Poster = poster;
                 _context.SaveChanges();
                 return Ok("Successfully edited movie");
-            } else {
-                return StatusCode(409, "Conflict, imdbID doesn't exists");
             }
+            return StatusCode(404, "Conflict, imdbID doesn't exists");
+            
         }
         catch (Exception ex)
         {
