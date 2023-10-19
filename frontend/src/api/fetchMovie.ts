@@ -7,8 +7,8 @@ export const fetchMovie = async (
   page: string = '1',
   type?: string,
   year?: string
-): Promise<movieResponse> => {
-  let query = `http://localhost:5212/movie?s=${title}&page=${page}`
+): Promise<movieResponse>=> {
+  let query = `http://localhost:5212/movie?s=${title}&pageNumber=${page}`
 
   if (type) query += `&type=${type}`
   if (year) query += `&y=${year}`

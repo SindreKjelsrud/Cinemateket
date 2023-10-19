@@ -14,6 +14,7 @@ function App() {
   const [totalPages, setTotalPages] = useState(0)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMovie, setModalMovie] = useState<movieObject | null>(null)
+  const [message, setMessage] = useState('Find a list of movies by searching above ☝️')
   const navigateToPage = useNavigateToPage()
   const searchParams = new URLSearchParams(window.location.search)
   const [movieTitle, setMovieTitle] = useState(searchParams.get('s') || '')
@@ -26,6 +27,14 @@ function App() {
     const handleFetchMovie = async () => {
       const response = await fetchMovie(title, page, type, year)
       console.log(year)
+      if (response == undefined) {
+        setMovies([])
+        setTotalPages(0)
+        setCurrentPage(1)
+        setLoading(false)
+        setMessage("We unfortunately didn't have any movies matching your search 😭")
+        return
+      }
       if (response.response == 'OK') {
         setMovies(response.search)
         setTotalPages(Number(response.totalResults))
@@ -118,7 +127,7 @@ function App() {
           ) : movies.length > 0 ? (
             <MovieTable {...{ handleModalOpen, sortHandler, movies }} />
           ) : (
-            <q.h2>Find a list of movies by searching above ☝️ </q.h2>
+            <q.h2>{message}</q.h2>
           )}
         </q.div>
       </q.div>
