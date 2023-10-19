@@ -21,14 +21,14 @@
 5. Legg til støtte for pagination, gjennom å bruke api'et.
 
 ### ➡️ Oppgave 2
-Sett opp ett .NET REST api prosjekt. Dette må kunne koble seg på en postgresql database. Helst med code first logikk, og bruke migrations for å gjøre endringer på databasen. For å snakke med databasen brukes Entity Framework og LINQ.
+Sett opp ett .NET REST API prosjekt. Dette må kunne koble seg på en PostgreSQL database. Helst med code first logikk, og bruke migrations for å gjøre endringer på databasen. For å snakke med databasen brukes Entity Framework og LINQ.
 
 Legg til filmer i databasen. Dette kan gjøres på følgende 2 måter:
 1. Ved å kjøre en migration og legge til dummy data
 
-2. Gjøre ett api kall til api'et fra oppgave 1, og så lagre det i deres egne databasee.
+2. Gjøre ett API kall til API'et fra oppgave 1, og så lagre det i deres egne databasee.
 
-Erstatt api-kallene i oppgave 1, med deres egne kall. API'et skal ha støtte for pagination og alt annet dere har brukt. Når kan dere også legge til støtte for sortering.
+Erstatt API-kallene i oppgave 1, med deres egne kall. API'et skal ha støtte for pagination og alt annet dere har brukt. Nå kan dere også legge til støtte for sortering.
 
 Legg til støtte for å kunne legge til og slette filmer i databasen.
 
@@ -42,24 +42,12 @@ Ettersom vi skulle bruke React i oppgave 1 så har vi valgt å bruke Vite React 
 I oppgave 2 bruker vi C# med dotNET rammeverket, og har PostgreSQL database i en Docker-container. 
 
 ## 🛠️ Hvordan kjøre lokalt
-
-### Frontend
-1. [NodeJS](https://nodejs.org/en) må være installert
-2. Klon prosjektet og gå inn i frontend-mappen
-   ```ts
-   git clone https://github.com/SindreKjelsrud/Cinemateket.git
-   cd Cinemateket/frontend
-   ```
-3. Installer nødvendige pakker med: `npm install`
-4. For å kjøre prosjektet bruk: `npm run dev`
-
-### Backend
 1. Følgende teknologier må være installert:
    - [dotNET](https://dotnet.microsoft.com/en-us/)
-   - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-2. Klon prosjektet og gå inn i backend-mappen
-   ```c#
-   git clone https://github.com/SindreKjelsrud/Cinemateket.git
-   cd Cinemateket/backend
-   ```
-3. For å sette opp resten så kan du kjøre: `bash start.sh` 
+   - [Docker](https://www.docker.com/) eller [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+  
+2. Klon prosjektet: `git clone https://github.com/SindreKjelsrud/Cinemateket.git`
+ 
+3. For å sette opp resten så kan du kjøre: `bash start.sh`
+
+> Dette setter opp både frontenden og backenden for deg.
