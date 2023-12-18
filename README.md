@@ -4,6 +4,7 @@
 ## 📝 Oppgavetekst
 
 ### ➡️ Oppgave 1
+
 1. Lag en webside som viser en tabell av informasjon fra et API online.
 > 1.5. API-kravspesifikasjon:  
 > 1. Støtte for pagination i api'et  
@@ -21,6 +22,7 @@
 5. Legg til støtte for pagination, gjennom å bruke api'et.
 
 ### ➡️ Oppgave 2
+
 Sett opp ett .NET REST API prosjekt. Dette må kunne koble seg på en PostgreSQL database. Helst med code first logikk, og bruke migrations for å gjøre endringer på databasen. For å snakke med databasen brukes Entity Framework og LINQ.
 
 Legg til filmer i databasen. Dette kan gjøres på følgende 2 måter:
@@ -32,16 +34,16 @@ Erstatt API-kallene i oppgave 1, med deres egne kall. API'et skal ha støtte for
 
 Legg til støtte for å kunne legge til og slette filmer i databasen.
 
-Lag en enkel innloggingsside og autentisering på nettsiden.
-
 > Bonus: Legg gjerne til Swagger i oppgaven, da dette er noe som er veldig vanlig å bruke.
 
 ## 🏗️ Teknologier
+
 Ettersom vi skulle bruke React i oppgave 1 så har vi valgt å bruke Vite React med Typescript for dette prosjektet.
 
 I oppgave 2 bruker vi C# med dotNET rammeverket, og har PostgreSQL database i en Docker-container. 
 
 ## 🛠️ Hvordan kjøre lokalt
+
 1. Følgende teknologier må være installert:
    - [dotNET](https://dotnet.microsoft.com/en-us/)
    - [Docker](https://www.docker.com/) eller [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -51,3 +53,12 @@ I oppgave 2 bruker vi C# med dotNET rammeverket, og har PostgreSQL database i en
 3. For å sette opp resten så kan du kjøre: `bash start.sh`
 
 > Dette setter opp både frontenden og backenden for deg.
+
+## 📸 Figma sketch
+
+![Figma sketch](https://github.com/SindreKjelsrud/Cinemateket/assets/93219711/9dbfa147-5c75-4413-bad9-54f8af0a141d)
+
+
+## 🎥 Demo
+
+https://github.com/SindreKjelsrud/Cinemateket/assets/93219711/622486c6-4c1b-468c-97c2-49e19ff22905
